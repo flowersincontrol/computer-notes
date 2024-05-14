@@ -1,0 +1,236 @@
+"I expect you to perform the test, I don't expect you to understand them. I am not a cruel man."
+############################################################
+############################################################
+# How do more with my comments?
+* text editing
+Ctrl+Left Arrow – Move cursor to beginning of previous word.
+
+Ctrl+Right Arrow – Move cursor to beginning of next word
+
+Ctrl+Backspace – Delete previous word.
+
+Ctrl+Delete – Delete next word.
+
+Ctrl+Up Arrow – Move cursor to beginning of paragraph.
+
+Ctrl+Down Arrow – Move cursor to end of paragraph.
+Selecting Text
+Shift+Left or Right Arrow Keys – Select characters one at a time.
+
+Shift+Up or Down Arrow Keys – Select lines one at a time.
+
+Shift+Ctrl+Left or Right Arrow Keys – Select words – keep pressing the arrow keys to select additional words.
+
+Shift+Ctrl+Up or Down Arrow Keys – Select paragraphs.
+
+Shift+Home – Select the text between the cursor and the beginning of the current line.
+
+Shift+End – Select the text between the cursor and the end of the current line.
+
+Shift+Ctrl+Home – Select the text between the cursor and the beginning of the text entry field.
+
+Shift+Ctrl+End – Select the text between the cursor and the end of the text entry field.
+
+Shift+Page Down – Select a frame of text below the cursor.
+
+Shift+Page Up – Select a frame of text above the cursor.
+
+Ctrl+A – Select all text.
+
+Editing
+You can really speed up text-editing by using the Ctrl keyboard shortcuts to copy and paste text.
+
+Ctrl+C, Ctrl+Insert – Copy selected text.
+
+Ctrl+X, Shift+Delete – Cut selected text.
+
+Ctrl+V, Shift+Insert – Paste text at cursor.
+
+Ctrl+Z – Undo.
+
+Ctrl+Y – Redo.
+
+Formatting
+Ctrl+B – Bold.
+
+Ctrl+I – Italic.
+
+Ctrl+U – Underline.
+
+Functions
+F3 – Find next.
+
+Shift+F3 – Find previous.
+
+Ctrl+O – Open.
+
+Ctrl+S – Save.
+
+Ctrl+N – New document.
+
+Ctrl+P – Print.
+
+
+Alt – Activate application’s menu bar. You can use the arrow keys to select a menu option and the Enter key to activate it.
+
+Alt+F – Open File menu.
+
+Alt+E – Open Edit menu.
+
+Alt+V – Open View menu.
+* emacs
+* orgmode
+
+** Exporting
+[[https://orgmode.org][*bold* description]]
+#+begin_comment
+[[https://orgmode.org]][*bold* This is the orgmode homepage]
+#+end_comment
+** Image embedding
+12.7 Images
+An image is a link to an image file117 that does not have a description part, for example
+
+./img/cat.jpg
+If you wish to define a caption for the image (see Captions) and maybe a label for internal cross references (see Internal Links), make sure that the link is on a line by itself and precede it with CAPTION and keywords as follows:
+
+#+CAPTION: This is the caption for the next figure link (or table)
+#+NAME:   fig:SED-HR4049
+[[./img/a.jpg]]
+Such images can be displayed within the buffer with the following command:
+
+C-c C-x C-v (org-toggle-inline-images)
+Toggle the inline display of linked images. When called with a prefix argument, also display images that do have a link description. You can ask for inline images to be displayed at startup by configuring the variable org-startup-with-inline-images118.
+** TODO How do I cycle list bullets?
+** TODO Copy all I got in here!
+** Clock in Clock out
+How do I log in and log out?
+| Motion (C-c + ...) | What it does | extra settings |
+|--------------------+--------------+----------------|
+| C-x TAB            | Clock in     |                |
+| C-x C-o            | Clock out    |                |
+
+** Tables
+| Motion                 | What it does                          | extra settings |
+|------------------------+---------------------------------------+----------------|
+| C-c \(Except straight) | Create empty  table,or convert region |                |
+|                        |                                       |                |                         |                                       |                |
+
+
+| Motion  | What it does            | extra settings |
+|---------+-------------------------+----------------|
+| Spc m t | Todo menu               |                |
+| Spc m   | major-mode menu         |                |
+| Spc x   | open scratch buffer tab |                |
+| Spc ~   | go back to last tab     |                |
+| C-x d   | Dired directory..?      |                |
+
+* vim
+
+| Command   | What it does                         |
+|-----------+--------------------------------------|
+| S k       | search manual for word under cursor  |
+| :bn       | next buffer                          |
+| :bp       | previous buffer                      |
+| :bd       | close a buffer/file                  |
+| :b(#)     | go to buffer by number               |
+| :sp file  | split window, open file in split     |
+| :changes  | list of changes                      |
+| zz        | center cursor                        |
+| gd        | jump to local declaration            |
+| :exp      | file explorer                        |
+| :ter      | open terminal                        |
+| :vs file  | vertical split, open file in split   |
+| :ls       | buffer list                          |
+| C \ + C n | escape from terminal                 |
+| :tab ba   | edit all buffers as tabs             |
+| :vert ba  | edit all buffers as vertical windows |
+| :set wrap | set text wrapping                    |
+|           |                                      |
+
+<S - k> :: Search manual for word under cursor
+:bn - next buffer
+:bp - previous buffer
+:bd - close a buffer/file
+:b# - go to buffer by number
+:sp file - split window, open file in split
+:changes - list of changes
+zz - center cursor in screen
+gd - Jump to local declaration
+:Exp - File explorer
+:ter - Open terminal, C - d to exit
+:vs - vertical split
+:sp - horizontal split
+:ls - buffer list
+C-\ C-n - Escape terminal window to normal mode
+:tab ba - edit all buffers as tabs
+:vert ba - edit all buffers as vertical windows
+
+:set wrap - sets text wrapping
+
+<C - r> % :: Paste current working dir with filename (insert mode)
+<S - j> :: Join line below
+:m +1 - moves down 1 line
+:m -2 - move up 1 lines
+:m 3 - move the line after 3rd line (replace 3 to any line you'd like)
+D :: delete to end of line
+:%s/<search_phrase>/<replace_phrase>/options  options include c for confirmation, i for ignoring the case, and g to replace all occurrences.
+:s/<search_phrase>/<replace_phrase>/options - single line only
+Troubleshoot Tab binding... apply this to enter ( <CR> )
+:verbose imap <Tab>
+
+<C-[>, <C-c> :: exit insert mode, abort command
+<C-k>  :: insert key for mapping (insert mode)
+<C-p> :: autocomplete with reference location  (insert mode)
+<C-o> :: cycle buffer  backward
+<C-i> :: cycle buffer forward
+gt - Cycle forward through tabs
+gT - Cycle backwards through tabs
+:helpgrep - to search for text in the help file
+				example:: :helpgrep \<next\ tab\>
+
+ctrl-w ctrl-w - move cursor to another window (cycle)
+
+ctrl-w= - make all equal size
+
+10 ctrl-w+ - increase window size by 10 lines
+
+:vsplit file - vertical split
+
+:sview file - same as split, but readonly
+
+:hide - close current window
+
+:only - keep only this window open
+
+C-w - will maximize a window vertically.
+
+C-w | will maximize a window horizontally.
+
+** Text editing
+cc - Replace entire line
+<C - r> % :: Paste current working dir with filename (insert mode)
+<S - j> :: Join line below
+:m +1 - moves down 1 line
+:m -2 - move up 1 lines
+:m 3 - move the line after 3rd line (replace 3 to any line you'd like)
+D :: delete to end of line
+C - w :: Delete word before cursor while in insert mode
+
+** Marks
+m(letter) - Mark at location as letter
+`(letter) - Jump to letter
+y`(letter) - yank to marked letter
+
+** Motions
+C - u :: Half-page up
+C - d :: Down-half page
+C - h :: Delete character before cursor while in insert mode
+b - index backwards by word
+e - index forwards by word
+C - S - Up :: tab cycle forward
+C - S - Down :: tab cycle back
+
+* terminal
+
+* bash
+* python

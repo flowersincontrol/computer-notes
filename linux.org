@@ -1,0 +1,94 @@
+* Installation Technicals
+** Cheaty Cheatsheet
+*** How to fix the collapsing
+I somewhat fixed it by adding a "if(this._signals) " in front of
+line 85 in /home/username/.local/share/cinnamon/applets/cheaty@centurix/applet.js
+
+It now works like you would expect, however I don't really know what that line does, so do this at your own risk!
+
+The mentioned line now looks like this:
+if(this._signals) this._signals.connect(this.menu, 'open-state-changed', Lang.bind(this,this._subMenuOpenStateChanged));
+*** PROJ To really fix... use less in each category
+ + [ ] Make my own JSON files for cheaty
+   a. Make a template with bash script.
+   b. Import from org file ::
+   c. Stuff to include
+    ;; cycle through todo list progress: todo in-progress done etc..
+    shift left and right
+    ;; promote and demote nodes
+    alt left and right
+    ;; expand and collapse
+    tab
+    ;; create more nodes
+    alt-enter
+
+ + Default JSON location
+   - ~/.local/share/cinnamon/applets/cheaty@centurix/refdocs
+
+** List all installed packages
+
+** List all installed repositories and PPA's
+*** grep -r --include '*.list' '^deb ' /etc/apt/sources.list /etc/apt/sources.list.d/
+excludes commented lines as well as deb-src lines to enable source code repositories.
+*** prettier
+If you want prettier output, let's pipe it through sed:
+
+grep -r --include '*.list' '^deb ' /etc/apt/ | sed -re 's/^\/etc\/apt\/sources\.list((\.d\/)?|(:)?)//' -e 's/(.*\.list):/\[\1\] /' -e 's/deb http:\/\/ppa.launchpad.net\/(.*?)\/ubuntu .*/ppa:\1/'
+** apt-key deprecated - PPA keys
+https://stackoverflow.com/questions/68992799/warning-apt-key-is-deprecated-manage-keyring-files-in-trusted-gpg-d-instead?noredirect=1&lq=1
+*** a better solution is above...
+ - https://forums.linuxmint.com/viewtopic.php?f=42&t=377591
+   - First, get a list of the keys for all your installed PPAs. Open a terninal and run
+        CODE: SELECT ALL
+
+         - [ ] sudo apt-key list
+        Each PPA will be listed showing "pub rsa<some-number> <some-date>" then a second line with a 40 digit hexadecimal key fingerprint. Write down the last 8 digits of each fingerprint, like LibreOffice 1378B444, or Gimp 852541CB, etc. You can also get these keys graphically by opening Software Sources from the Mint Menu, and choosing Authentication Keys.
+
+        Then, extract the keys to a location out of the apt-key area. Some research suggests using /etc/apt/keyrings/, but the Debian structure on which Ubuntu is built recommends /usr/share/keyrings/ (and that is already being used by Syncthing). For each PPA you listed above, run:
+        CODE: SELECT ALL
+
+        sudo apt-key export <8-digit-fingerprint-numbers-here!> | sudo gpg --dearmour -o /usr/share/keyrings/<product-name-here!>-archive.keyring.gpg
+        (without the < > characters, of course). For example, I ran
+        CODE: SELECT ALL
+
+        sudo apt-key export 7CA69FC4 | sudo gpg --dearmour -o /usr/share/keyrings/qbittorrent-archive.keyring.gpg
+        Next, go into /etc/apt/sources.list.d and edit each of the PPA .list files. I used the file browser, right click, Open as Root, and just double clicked to open each file in Xed. In each file between deb and the url, add [signed-by=/usr/share/keyrings/<product-name-here!>-archive.keyring.gpg].
+
+        For example, in: qbittorrent-team-qbittorrent-stable-jammy.list I changed
+        deb http://ppa.launchpad.net/qbittorrent-team/qbittorrent-stable/ubuntu jammy main
+        to
+        CODE: SELECT ALL
+
+        deb [signed-by=/usr/share/keyrings/qbittorrent-archive.keyring.gpg] http://ppa.launchpad.net/qbittorrent-team/qbittorrent-stable/ubuntu jammy main
+        When all the PPAs are [signed-by], optionally delete the keys from the apt-key area. This is not really necessary because the [signed-by] bypasses them, but I like cleaning obsolete entries. Open Software Sources from the Mint Menu, choose Authentication Keys, and delete the keys you just bypassed.
+
+        Finally, run sudo apt update and/or Refresh in Update Manager. The warnings should be gone.
+        deb [signed-by=/usr/share/keyrings/launchpad-lutris-archive.keyring.gpg] https://ppa.launchpadcontent.net/lutris-team/lutris/ubuntu jammy main
+https://stackoverflow.com/questions/68992799/warning-apt-key-is-deprecated-manage-keyring-files-in-trusted-gpg-d-instead?noredirect=1&lq=1
+* terminal commands
+** ps :: process with options 
+-e :: all 
+r :: only running
+a :: all with tty, with other users
+-a :: all with tty, except session leaders
+pgrep "you_script" or pgrep -f "complete_cmd_line_of_script" :: "process-grep" results only the PID
+pkill :: which uses the same syntax as pgrep
+** grep
+grep abc test.txt
+grep <options> <txt search> <file>
+--> returns words from that file including 'abc'
+
+grep -i :: case insensitive
+
+grep -v :: exclude words with string 'abc' from string search
+
+[some terminal search] | grep <options> <term>
+example:	ps -ef | grep -i nginx
+--> searches for nginx process on system
+
+
+
+** tee
+    - send output to files listed after
+    - use with sudo to write to unowned files
+    - send to >/dev/null to avoid writing stdout

@@ -1,0 +1,74 @@
+#+title: python
+#+author: Alan Dainis
+#+date: <2024-01-30 Tue>
+
+* Kindle
+ScreenRatio = 1.6 : 1       # height : width
+** openCV
+For better accuracy, use binary images. So before finding contours, apply threshold or canny edge detection.
+Since OpenCV 3.2, findContours() no longer modifies the source image but returns a modified image as the first of three return parameters.
+In OpenCV, finding contours is like finding white object from black background. So remember, object to be found should be white and background should be black.
+
+
+ cv.findContours() function, first one is source image, second is contour retrieval mode, third is contour approximation method. And it outputs a modified image, the contours and hierarchy. contours is a Python list of all the contours in the image. Each individual contour is a Numpy array of (x,y) coordinates of boundary points of the object.
+
+To draw the contours, cv.drawContours function is used. It can also be used to draw any shape provided you have its boundary points. Its first argument is source image, second argument is the contours which should be passed as a Python list, third argument is index of contours (useful when drawing individual contour. To draw all contours, pass -1) and remaining arguments are color, thickness etc.
+
+To draw all the contours in an image:
+cv.drawContours(img, contours, -1, (0,255,0), 3)
+To draw an individual contour, say 4th contour:
+cv.drawContours(img, contours, 3, (0,255,0), 3)
+But most of the time, below method will be useful:
+cnt = contours[4]
+cv.drawContours(img, [cnt], 0, (0,255,0), 3)
+*** Draw rectangle, get rectangle coords
+
+* f-strings (Formatted String Literals)
+############################################################
+#+BEGIN_SRC
+import math
+print(f'blah blah {math.pi:.3f}.')
+#+END_SRC
+############################################################
+############################################################
+#+BEGIN_SRC
+for x in range(1, 10):
+    print('{0:2d}{1:3d}{2:4d}'.format(x, x*x, x*x*x)
+
+return
+#+END_SRC
+############################################################
+
+* Fun with functions
+** function comments
+
+############################################################
+
+def sort_words(words):
+    """Sorts the words"""
+    return sorted(words)
+
+ ############################################################
+Shows up as help for user
+* Error handling
+############################################################
+
+try:
+
+except ValueError:      # On exception stops running the rest of the try block.
+# Runs exception block and continues after the try.
+
+finally:        # Runs regardless of whether try produces an exception.
+############################################################
+
+ - Return of finally block will be returned instad of try block's return...
+
+ - Without explicit except clause, except is re-raised after finally.
+    - Overridden by break, continue, return
+
+** Types of errors
+ + NameError
+ + ValueError
+ + TypeError
+ + KeyboardInterrupt
+ + RuntimeError

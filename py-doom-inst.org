@@ -1,0 +1,74 @@
+#+title: installation
+#+author: Alan Dainis
+#+date: <2024-01-15 Mon>
+* GccEmacs Installation
+https://www.emacswiki.org/emacs/GccEmacs
+Installation
+From source
+To build GccEmacs, you will need libgccjit in addition to the other dependencies described in BuildingEmacs[https://www.emacswiki.org/emacs/BuildingEmacs].
+
+First, checkout the latest stable release branch (from emacs-28 onwards) or the unstable master branch, and configure it with the --with-native-compilation flag:
+
+    $ git clone git://git.savannah.gnu.org/emacs.git
+    $ cd emacs
+    $ git checkout emacs-28
+    $ ./autogen.sh
+    $ ./configure --with-native-compilation
+    $ make -j$(nproc)
+You should see "Does Emacs have native lisp compiler? yes" near the end of the configure output if native compilation has been enabled.
+
+If you wish, install conventionally with make install otherwise run it from the build tree with ./src/emacs.
+* System Crafters
+Doom emacs Python IDE
+https://github.com/daviwil/emacs-from-scratch/blob/dd9320769f3041ac1edca139496f14abe147d010/README.org
+* lang requirements for Doom
+https://docs.doomemacs.org/latest/modules/lang/python/
+Fixed: pip/python: normal site-packages is not writeable
+alan@Framework:~$ python3 -m pip install -U pip black
+# As you didn't preface the command with sudo you cannot write to the system library hence they have been placed in your user library. The package for the latest version of Python is just pip. Where the package is placed depends on the version of python you use to run pip, not on a specific version of pip such as pip3.
+
+**  Conflicting libraries for virtual py env?
+*** Attempting uninstall: pyflakes
+    Found existing installation: pyflakes 3.2.0
+    Uninstalling pyflakes-3.2.0:
+      Successfully uninstalled pyflakes-3.2.0
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+virtualenv 20.13.0+ds requires platformdirs<3,>=2, but you have platformdirs 4.1.0 which is incompatible.
+
+You are trying to run Python 3.9, right? Well, according to your error message, it seems like you're invoking Python 2.7:
+
+File "/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/pkg_resources/__init__.py", line 3241, in <module>
+                                                           ^^^
+*** How to check packages available to python verisions
+This confusion happens because macOS added Python 2.7 to the distribution for... compatibility reasons. And, probably, you have virtualenv on that distribution, but you don't have platformdirs, so creating a virtualenv fails.
+
+How to solve the problem?
+There are many ways to clarify this confusion. A good way is using python3 -m virtualenv (instead of virtualenv). That should create a virtualenv with Python 3.
+
+Also, you can get sure that the virtualenv package is available in your Python 3.9 installation. To identify that, see if virtualenv appears when typing python3 -m pip list. If not, run python3 -m pip install virtualenv.
+
+
+* Doom doctor run ... <2024-01-15 Mon>
+  > Checking your enabled modules...
+    > :lang clojure
+      ! Couldn't find clj-kondo. flycheck-clj-kondo will not work.
+    > :lang python
+      ! Couldn't find isort. Import sorting will not work.
+      ! Couldn't find nosetests. Running tests through nose will not work.
+      ! Couldn't find pytest. Running tests through pytest will not work.
+    > :lang sh
+      ! Couldn't find shellcheck. Shell script linting will not work
+> Checking for Emacs config conflicts...
+  ! Found another Emacs config: ~/.config/emacs (directory)
+    Having multiple Emacs configs may prevent Doom from loading
+    properly. Emacs will load the first it finds and ignore the rest. If
+    Doom isn't starting up correctly (e.g. you get a vanilla splash
+    screen), make sure that only one of these exist.
+
+    Chemacs users may ignore this warning.
+> Checking for missing Emacs features...
+  ! Emacs was not built with native compilation support
+    Users will see a substantial performance gain by building Emacs with
+    native compilation support, availible in emacs 28+.You must install a
+    prebuilt Emacs binary with this included, or compile Emacs with the
+    --with-native-compilation option.
